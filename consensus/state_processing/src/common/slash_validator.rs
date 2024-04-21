@@ -66,11 +66,13 @@ pub fn slash_validator<T: EthSpec>(
         return Err(BeaconStateError::UnknownValidator(whistleblower_index).into());
     }
 
-    increase_balance(state, proposer_index, proposer_reward)?;
+    increase_balance(state, proposer_index, proposer_reward, spec.max_excess_balance, false)?;
     increase_balance(
         state,
         whistleblower_index,
         whistleblower_reward.safe_sub(proposer_reward)?,
+        spec.max_excess_balance,
+        false
     )?;
 
     Ok(())

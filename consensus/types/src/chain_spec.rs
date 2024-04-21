@@ -67,6 +67,7 @@ pub struct ChainSpec {
      */
     pub min_deposit_amount: u64,
     pub max_effective_balance: u64,
+    pub max_excess_balance: u64,
     pub ejection_balance: u64,
     pub effective_balance_increment: u64,
 
@@ -568,6 +569,10 @@ impl ChainSpec {
                 u64::checked_pow(2, 5)?.checked_mul(u64::checked_pow(10, 9)?)
             })
             .expect("calculation does not overflow"),
+            max_excess_balance: option_wrapper(|| {
+                u64::checked_pow(2, 5)?.checked_mul(u64::checked_pow(10, 9)?)
+            })
+            .expect("calculation does not overflow"),
             ejection_balance: option_wrapper(|| {
                 u64::checked_pow(2, 4)?.checked_mul(u64::checked_pow(10, 9)?)
             })
@@ -826,6 +831,10 @@ impl ChainSpec {
             })
             .expect("calculation does not overflow"),
             max_effective_balance: option_wrapper(|| {
+                u64::checked_pow(2, 5)?.checked_mul(u64::checked_pow(10, 9)?)
+            })
+            .expect("calculation does not overflow"),
+            max_excess_balance: option_wrapper(|| {
                 u64::checked_pow(2, 5)?.checked_mul(u64::checked_pow(10, 9)?)
             })
             .expect("calculation does not overflow"),
@@ -1160,6 +1169,14 @@ pub struct Config {
     #[serde(default = "default_blob_sidecar_subnet_count")]
     #[serde(with = "serde_utils::quoted_u64")]
     blob_sidecar_subnet_count: u64,
+
+    // more config for canxium
+    #[serde(with = "serde_utils::quoted_u64")]
+    max_excess_balance: u64,
+    #[serde(with = "serde_utils::quoted_u64")]
+    base_reward_factor: u64,
+    #[serde(with = "serde_utils::quoted_u64")]
+    inactivity_penalty_quotient_bellatrix: u64,
 }
 
 fn default_bellatrix_fork_version() -> [u8; 4] {
@@ -1437,6 +1454,10 @@ impl Config {
             max_request_blob_sidecars: spec.max_request_blob_sidecars,
             min_epochs_for_blob_sidecars_requests: spec.min_epochs_for_blob_sidecars_requests,
             blob_sidecar_subnet_count: spec.blob_sidecar_subnet_count,
+
+            max_excess_balance: spec.max_excess_balance,
+            base_reward_factor: spec.base_reward_factor,
+            inactivity_penalty_quotient_bellatrix: spec.inactivity_penalty_quotient_bellatrix,
         }
     }
 
@@ -1502,6 +1523,9 @@ impl Config {
             max_request_blob_sidecars,
             min_epochs_for_blob_sidecars_requests,
             blob_sidecar_subnet_count,
+            max_excess_balance,
+            base_reward_factor,
+            inactivity_penalty_quotient_bellatrix,
         } = self;
 
         if preset_base != T::spec_name().to_string().as_str() {
@@ -1567,6 +1591,10 @@ impl Config {
                 max_request_blocks_deneb,
             ),
             max_blobs_by_root_request: max_blobs_by_root_request_common(max_request_blob_sidecars),
+
+            max_excess_balance,
+            base_reward_factor,
+            inactivity_penalty_quotient_bellatrix,
 
             ..chain_spec.clone()
         })

@@ -357,6 +357,6 @@ define_hardcoded_nets!(
         // directory where the configuration files are located for this network.
         "canxium",
         // Describes how the genesis state can be obtained.
-        GenesisStateSource::Unknown
+        GenesisStateSource::IncludedBytes
     )
 );
