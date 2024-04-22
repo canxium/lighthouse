@@ -1,0 +1,73 @@
+version: "3.4"
+services:
+  ssl:
+    image: itzg/openssl-ubuntu:latest
+    volumes:
+      - canxium:/canxium
+    command: rand -hex 32 | tr -d "\n" > "/canxium/jwt.hex"
+
+  init:
+    image: canxium/go-canxium:v0.1.3
+    depends_on:
+      ssl:
+        condition: service_completed_successfully
+    volumes:
+      - canxium:/canxium
+    command: --datadir=/canxium --db.engine=pebble init /genesis/mainnet.genesis.json
+
+  canxium:
+    image: canxium/go-canxium:v0.1.3
+    restart: always
+    volumes:
+      - canxium:/canxium
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    ports:
+      - "30303:30303"
+    command: --syncmode full --http --db.engine=pebble --authrpc.addr 0.0.0.0 --authrpc.jwtsecret=/canxium/jwt.hex --authrpc.vhosts=canxium --networkid 3003 --datadir /canxium --bootnodes enode://314f1041da4b27f5e4c02b4eac52ca7bd2f025cb585490cb7032fdb08db737aa10d7d64a780db697643ece6027d3bc1a511696420e76192648c0d2d74d099c73@boot.canxium.net:30303,enode://767d3e408b073ca501ea7336096c048eea46513ac5c44659ac902d7575881ca114c82277dff7826630ec9fb45d8cfa5a82b9eacc8b477dc475746eaec39e2f2a@boot.canxium.org:30303,enode://f06de34b87954abb25be2e8d592306bc55b396a4eead839dba90baf4e59465d3ef704866962cf2fd995e6ce04f17de31edebb11afcac9df4eaea847f35e3cbaf@boot-n2.canxium.org:30303
+
+  beacon_node:
+    image: canxium/lighthouse:v5.1.3
+    restart: always
+    volumes:
+      - beacon_node:/data
+      - canxium:/canxium
+      - logs:/logs
+    ports:
+      - "5052:5052" # API port
+      - "9000:9000" # P2P port
+    depends_on:
+      ssl:
+        condition: service_completed_successfully
+      canxium:
+        condition: service_started
+    command: bn --network canxium --execution-endpoint http://canxium:8551 --execution-jwt /canxium/jwt.hex --http --debug-level info --datadir /data --checkpoint-sync-url https://beacon-api.canxium.org --http-address 0.0.0.0
+
+  import_keys:
+    image: canxium/lighthouse:v5.1.3
+    volumes:
+      - validator:/data
+      - ./keystores:/keystores
+      - logs:/logs
+    command: account --network canxium --datadir /data validator import --directory /keystores --reuse-password --password-file /keystores/password.txt
+
+  validator:
+    image: canxium/lighthouse:v5.1.3
+    restart: always
+    volumes:
+      - validator:/data
+      - ./keystores:/keystores
+      - logs:/logs
+    depends_on:
+      import_keys:
+        condition: service_completed_successfully
+      beacon_node:
+        condition: service_started
+    command: vc --network canxium --suggested-fee-recipient 0x0000000000000000000000000000000000000000 --datadir /data --beacon-nodes http://beacon_node:5052 --debug-level info
+
+volumes:
+  canxium:
+  beacon_node:
+  validator:
+  logs:
