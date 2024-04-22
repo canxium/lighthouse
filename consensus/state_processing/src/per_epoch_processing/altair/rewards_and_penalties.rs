@@ -44,7 +44,7 @@ pub fn process_rewards_and_penalties<T: EthSpec>(
     // Apply the deltas, erroring on overflow above but not on overflow below (saturating at 0
     // instead).
     for (i, delta) in deltas.into_iter().enumerate() {
-        increase_balance(state, i, delta.rewards)?;
+        increase_balance(state, i, delta.rewards, spec.max_excess_balance, false)?;
         decrease_balance(state, i, delta.penalties)?;
     }
 

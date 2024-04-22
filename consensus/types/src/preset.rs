@@ -57,8 +57,6 @@ pub struct BasePreset {
     #[serde(with = "serde_utils::quoted_u64")]
     pub validator_registry_limit: u64,
     #[serde(with = "serde_utils::quoted_u64")]
-    pub base_reward_factor: u64,
-    #[serde(with = "serde_utils::quoted_u64")]
     pub whistleblower_reward_quotient: u64,
     #[serde(with = "serde_utils::quoted_u64")]
     pub proposer_reward_quotient: u64,
@@ -105,7 +103,6 @@ impl BasePreset {
             epochs_per_slashings_vector: T::EpochsPerSlashingsVector::to_u64(),
             historical_roots_limit: T::HistoricalRootsLimit::to_u64(),
             validator_registry_limit: T::ValidatorRegistryLimit::to_u64(),
-            base_reward_factor: spec.base_reward_factor,
             whistleblower_reward_quotient: spec.whistleblower_reward_quotient,
             proposer_reward_quotient: spec.proposer_reward_quotient,
             inactivity_penalty_quotient: spec.inactivity_penalty_quotient,
@@ -154,8 +151,6 @@ impl AltairPreset {
 #[serde(rename_all = "UPPERCASE")]
 pub struct BellatrixPreset {
     #[serde(with = "serde_utils::quoted_u64")]
-    pub inactivity_penalty_quotient_bellatrix: u64,
-    #[serde(with = "serde_utils::quoted_u64")]
     pub min_slashing_penalty_quotient_bellatrix: u64,
     #[serde(with = "serde_utils::quoted_u64")]
     pub proportional_slashing_multiplier_bellatrix: u64,
@@ -172,7 +167,6 @@ pub struct BellatrixPreset {
 impl BellatrixPreset {
     pub fn from_chain_spec<T: EthSpec>(spec: &ChainSpec) -> Self {
         Self {
-            inactivity_penalty_quotient_bellatrix: spec.inactivity_penalty_quotient_bellatrix,
             min_slashing_penalty_quotient_bellatrix: spec.min_slashing_penalty_quotient_bellatrix,
             proportional_slashing_multiplier_bellatrix: spec
                 .proportional_slashing_multiplier_bellatrix,

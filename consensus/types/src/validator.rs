@@ -117,7 +117,7 @@ impl Validator {
     pub fn is_partially_withdrawable_validator(&self, balance: u64, spec: &ChainSpec) -> bool {
         self.has_eth1_withdrawal_credential(spec)
             && self.effective_balance == spec.max_effective_balance
-            && balance > spec.max_effective_balance
+            && balance > spec.max_excess_balance
     }
 }
 

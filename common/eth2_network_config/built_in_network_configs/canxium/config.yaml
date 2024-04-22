@@ -10,24 +10,21 @@ PRESET_BASE: 'mainnet'
 # Must match the regex: [a-z0-9\-]
 CONFIG_NAME: 'canxium'
 
-# Transition
-# ---------------------------------------------------------------
-# Estimated on Sept 15, 2022
-TERMINAL_TOTAL_DIFFICULTY: 80000000000000000000
-# By default, don't use these params
-TERMINAL_BLOCK_HASH: 0x0000000000000000000000000000000000000000000000000000000000000000
-TERMINAL_BLOCK_HASH_ACTIVATION_EPOCH: 18446744073709551615
-
 # Genesis
 # ---------------------------------------------------------------
+# Apr 21, 2024, 00:00 AM UTC
+MIN_GENESIS_TIME: 1713657600
 # `2**14` (= 16,384)
-MIN_GENESIS_ACTIVE_VALIDATOR_COUNT: 164
-# Dec 1, 2020, 12pm UTC
-MIN_GENESIS_TIME: 1713571200
-# Mainnet initial fork version, recommend altering for testnets
-GENESIS_FORK_VERSION: 0x00300300
-# 864000 seconds (10 days)
-GENESIS_DELAY: 864000
+MIN_GENESIS_ACTIVE_VALIDATOR_COUNT: 166
+# 779671 seconds (9 days)
+GENESIS_DELAY: 779671
+
+# Deposit contract
+# ---------------------------------------------------------------
+# Ethereum PoW Mainnet
+DEPOSIT_CHAIN_ID: 3003
+DEPOSIT_NETWORK_ID: 3003
+DEPOSIT_CONTRACT_ADDRESS: 0xE616698D7c13E46C538f380da7b67E8FA7929a24
 
 # Forking
 # ---------------------------------------------------------------
@@ -35,18 +32,29 @@ GENESIS_DELAY: 864000
 #  - These may be re-assigned to another fork-version later
 #  - Temporarily set to max uint64 value: 2**64 - 1
 
+# Mainnet initial fork version, recommend altering for testnets
+GENESIS_FORK_VERSION: 0x00300300
+
 # Altair
 ALTAIR_FORK_VERSION: 0x00301300
-ALTAIR_FORK_EPOCH: 16  # Oct 27, 2021, 10:56:23am UTC
+ALTAIR_FORK_EPOCH: 5  # Apr 30, 2024
 # Bellatrix
 BELLATRIX_FORK_VERSION: 0x00302300
-BELLATRIX_FORK_EPOCH: 450  # Sept 6, 2022, 11:34:47am UTC
+BELLATRIX_FORK_EPOCH: 10  # Apr 30, 2024
 # Capella
 CAPELLA_FORK_VERSION: 0x00303300
-CAPELLA_FORK_EPOCH: 27450  # April 12, 2023, 10:27:35pm UTC
+CAPELLA_FORK_EPOCH: 45000  # 8 August 2024
 # Deneb
 DENEB_FORK_VERSION: 0x00304300
-DENEB_FORK_EPOCH: 18446744073709551615  # March 13, 2024, 01:55:35pm UTC
+DENEB_FORK_EPOCH: 18446744073709551615
+
+# Transition
+# ---------------------------------------------------------------
+# Estimated on June 20, 2024
+TERMINAL_TOTAL_DIFFICULTY: 86680000000000000000
+# By default, don't use these params
+TERMINAL_BLOCK_HASH: 0x0000000000000000000000000000000000000000000000000000000000000000
+TERMINAL_BLOCK_HASH_ACTIVATION_EPOCH: 18446744073709551615
 
 # Time parameters
 # ---------------------------------------------------------------
@@ -61,14 +69,25 @@ SHARD_COMMITTEE_PERIOD: 256
 # 2**11 (= 2,048) Eth1 blocks ~8 hours
 ETH1_FOLLOW_DISTANCE: 2048
 
+# Validator reward and penalty
+# ---------------------------------------------------------------
+# 2**9 (= 512)
+BASE_REWARD_FACTOR: 512
+# 2**4 * 10**9 (= 16,000,000,000) Gwei
+EJECTION_BALANCE: 16000000000
+# 2**5 * 10**10 (= 320,000,000,000) Gwei
+MAX_EXCESS_BALANCE: 320000000000
+
+# Bellatrix
+# 2**24 (= 16,777,216)
+INACTIVITY_PENALTY_QUOTIENT_BELLATRIX: 4194304
+
 # Validator cycle
 # ---------------------------------------------------------------
 # 2**2 (= 4)
 INACTIVITY_SCORE_BIAS: 4
 # 2**4 (= 16)
 INACTIVITY_SCORE_RECOVERY_RATE: 16
-# 2**4 * 10**9 (= 16,000,000,000) Gwei
-EJECTION_BALANCE: 16000000000
 # 2**2 (= 4)
 MIN_PER_EPOCH_CHURN_LIMIT: 4
 # 2**16 (= 65,536)
@@ -86,14 +105,6 @@ REORG_HEAD_WEIGHT_THRESHOLD: 20
 REORG_PARENT_WEIGHT_THRESHOLD: 160
 # `2` epochs
 REORG_MAX_EPOCHS_SINCE_FINALIZATION: 2
-
-
-# Deposit contract
-# ---------------------------------------------------------------
-# Ethereum PoW Mainnet
-DEPOSIT_CHAIN_ID: 3003
-DEPOSIT_NETWORK_ID: 3003
-DEPOSIT_CONTRACT_ADDRESS: 0xE616698D7c13E46C538f380da7b67E8FA7929a24
 
 # Networking
 # ---------------------------------------------------------------

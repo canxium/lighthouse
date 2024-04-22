@@ -526,7 +526,7 @@ pub fn get_expected_withdrawals<T: EthSpec>(
                 address: validator
                     .get_eth1_withdrawal_address(spec)
                     .ok_or(BlockProcessingError::WithdrawalCredentialsInvalid)?,
-                amount: balance.safe_sub(spec.max_effective_balance)?,
+                amount: balance.safe_sub(spec.max_excess_balance)?,
             });
             withdrawal_index.safe_add_assign(1)?;
         }

@@ -24,8 +24,27 @@ pub fn increase_balance<E: EthSpec>(
     state: &mut BeaconState<E>,
     index: usize,
     delta: u64,
+    max_excess_balance: u64,
+    deposit: bool,
 ) -> Result<(), BeaconStateError> {
-    state.get_balance_mut(index)?.safe_add_assign(delta)?;
+    // deposit always be added
+    if deposit {
+        state.get_balance_mut(index)?.safe_add_assign(delta)?;
+        return Ok(());
+    }
+
+    let current_balance = state.balances()[index];
+    if current_balance >= max_excess_balance {
+        return Ok(());
+    }
+
+    let balance = state.get_balance_mut(index)?;
+    if current_balance.safe_add(delta)? > max_excess_balance {
+        *balance = max_excess_balance
+    } else {
+        balance.safe_add_assign(delta)?;
+    }
+    
     Ok(())
 }
 
