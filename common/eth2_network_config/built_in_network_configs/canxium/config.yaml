@@ -12,12 +12,12 @@ CONFIG_NAME: 'canxium'
 
 # Genesis
 # ---------------------------------------------------------------
-# Apr 21, 2024, 1209 AM UTC
-MIN_GENESIS_TIME: 1713675600
+# Apr 21, 2024, 00:00 AM UTC
+MIN_GENESIS_TIME: 1713657600
 # `2**14` (= 16,384)
-MIN_GENESIS_ACTIVE_VALIDATOR_COUNT: 164
-# 777600 seconds (9 days)
-GENESIS_DELAY: 777600
+MIN_GENESIS_ACTIVE_VALIDATOR_COUNT: 166
+# 779671 seconds (9 days)
+GENESIS_DELAY: 779671
 
 # Deposit contract
 # ---------------------------------------------------------------
