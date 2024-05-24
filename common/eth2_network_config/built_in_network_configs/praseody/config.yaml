@@ -13,11 +13,11 @@ CONFIG_NAME: 'praseody'
 # Genesis
 # ---------------------------------------------------------------
 # Dec 1, 2020, 12pm UTC
-MIN_GENESIS_TIME: 1712311200
+MIN_GENESIS_TIME: 1716360347
 # `2**14` (= 16,384)
-MIN_GENESIS_ACTIVE_VALIDATOR_COUNT: 164
+MIN_GENESIS_ACTIVE_VALIDATOR_COUNT: 132
 # 604800 seconds (7 days)
-GENESIS_DELAY: 600
+GENESIS_DELAY: 46800
 
 # Deposit contract
 # ---------------------------------------------------------------
@@ -50,7 +50,7 @@ DENEB_FORK_EPOCH: 18446744073709551615  # March 13, 2024, 01:55:35pm UTC
 # Transition
 # ---------------------------------------------------------------
 # Estimated on Sept 15, 2022
-TERMINAL_TOTAL_DIFFICULTY: 1016000000
+TERMINAL_TOTAL_DIFFICULTY: 762047059
 # By default, don't use these params
 TERMINAL_BLOCK_HASH: 0x0000000000000000000000000000000000000000000000000000000000000000
 TERMINAL_BLOCK_HASH_ACTIVATION_EPOCH: 18446744073709551615
@@ -70,18 +70,16 @@ ETH1_FOLLOW_DISTANCE: 128
 
 # Validator reward and penalty
 # ---------------------------------------------------------------
-# 2**6 (= 64)
-BASE_REWARD_FACTOR: 0
+# 2**9 (= 512)
+BASE_REWARD_FACTOR: 512
 # 2**4 * 10**9 (= 16,000,000,000) Gwei
 EJECTION_BALANCE: 16000000000
-# 2**5 * 10**9 (= 32,000,000,000) Gwei
+# 2**5 * 10**10 (= 320,000,000,000) Gwei
 MAX_EXCESS_BALANCE: 320000000000
 
 # Bellatrix
 # 2**24 (= 16,777,216)
-INACTIVITY_PENALTY_QUOTIENT_BELLATRIX: 16777216
-
-
+INACTIVITY_PENALTY_QUOTIENT_BELLATRIX: 4194304
 
 # Validator cycle
 # ---------------------------------------------------------------
