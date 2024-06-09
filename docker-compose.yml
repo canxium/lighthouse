@@ -7,7 +7,7 @@ services:
     command: rand -hex 32 | tr -d "\n" > "/canxium/jwt.hex"
 
   init:
-    image: canxium/go-canxium:v0.1.3
+    image: canxium/go-canxium:v0.2.2
     depends_on:
       ssl:
         condition: service_completed_successfully
@@ -16,7 +16,7 @@ services:
     command: --datadir=/canxium --db.engine=pebble init /genesis/mainnet.genesis.json
 
   canxium:
-    image: canxium/go-canxium:v0.1.3
+    image: canxium/go-canxium:v0.2.2
     restart: always
     volumes:
       - canxium:/canxium
