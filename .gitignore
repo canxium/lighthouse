@@ -8,7 +8,6 @@ flamegraph.svg
 perf.data*
 *.tar.gz
 /bin
-genesis.ssz
 /clippy.toml
 /.cargo
 
