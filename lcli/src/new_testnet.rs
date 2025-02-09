@@ -70,6 +70,18 @@ pub fn run<T: EthSpec>(testnet_dir_path: PathBuf, matches: &ArgMatches) -> Resul
     if let Some(v) = parse_ssz_optional(matches, "genesis-fork-version")? {
         spec.genesis_fork_version = v;
     }
+    if let Some(v) = parse_ssz_optional(matches, "altair-fork-version")? {
+        spec.altair_fork_version = v;
+    }
+    if let Some(v) = parse_ssz_optional(matches, "bellatrix-fork-version")? {
+        spec.bellatrix_fork_version = v;
+    }
+    if let Some(v) = parse_ssz_optional(matches, "capella-fork-version")? {
+        spec.capella_fork_version = v;
+    }
+    if let Some(v) = parse_ssz_optional(matches, "deneb-fork-version")? {
+        spec.deneb_fork_version = v;
+    }
 
     if let Some(proposer_score_boost) = parse_optional(matches, "proposer-score-boost")? {
         spec.proposer_score_boost = Some(proposer_score_boost);
@@ -95,6 +107,10 @@ pub fn run<T: EthSpec>(testnet_dir_path: PathBuf, matches: &ArgMatches) -> Resul
         spec.terminal_total_difficulty = ttd;
     }
 
+    if let Some(v) = parse_optional(matches, "config-name")? {
+        spec.config_name = Some(v);
+    }
+    
     let validator_count = parse_required(matches, "validator-count")?;
     let execution_payload_header: Option<ExecutionPayloadHeader<T>> =
         parse_optional(matches, "execution-payload-header")?

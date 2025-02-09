@@ -543,6 +543,46 @@ fn main() {
                         ),
                 )
                 .arg(
+                    Arg::with_name("altair-fork-version")
+                        .long("altair-fork-version")
+                        .value_name("HEX")
+                        .takes_value(true)
+                        .help(
+                            "Used to avoid reply attacks between testnets. Recommended to set to
+                              non-default.",
+                        ),
+                )
+                .arg(
+                    Arg::with_name("bellatrix-fork-version")
+                        .long("bellatrix-fork-version")
+                        .value_name("HEX")
+                        .takes_value(true)
+                        .help(
+                            "Used to avoid reply attacks between testnets. Recommended to set to
+                              non-default.",
+                        ),
+                )
+                .arg(
+                    Arg::with_name("capella-fork-version")
+                        .long("capella-fork-version")
+                        .value_name("HEX")
+                        .takes_value(true)
+                        .help(
+                            "Used to avoid reply attacks between testnets. Recommended to set to
+                              non-default.",
+                        ),
+                )
+                .arg(
+                    Arg::with_name("deneb-fork-version")
+                        .long("deneb-fork-version")
+                        .value_name("HEX")
+                        .takes_value(true)
+                        .help(
+                            "Used to avoid reply attacks between testnets. Recommended to set to
+                              non-default.",
+                        ),
+                )
+                .arg(
                     Arg::with_name("seconds-per-slot")
                         .long("seconds-per-slot")
                         .value_name("SECONDS")
@@ -663,6 +703,13 @@ fn main() {
                         .value_name("INTEGER")
                         .takes_value(true)
                         .help("The proposer score boost to apply as a percentage, e.g. 70 = 70%"),
+                )
+                .arg(
+                    Arg::with_name("config-name")
+                        .long("config-name")
+                        .value_name("STRING")
+                        .takes_value(true)
+                        .help("Name of this config"),
                 )
 
         )
